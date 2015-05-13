@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.view;
 
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -6,15 +6,16 @@ import android.util.AttributeSet;
 import android.widget.BaseAdapter;
 
 /**
- * Created by ${CaiShi} on 2015/1/6.
+ * 嵌套在SwipeRefreshLayout里面的listView,实现上啦和下拉刷新
+ * Created by ${yooranchen} on 2015/1/6.
  */
 public class SwipeToRefreshListView extends SwipeRefreshLayout implements SwipeRefreshLayout.OnRefreshListener {
 
-    private com.example.demo.OnRefreshListener listener;
+    private com.example.demo.view.OnRefreshListener listener;
 
-    public void setOnRefreshListener(com.example.demo.OnRefreshListener listener) {
+    public void setOnRefreshListener(com.example.demo.view.OnRefreshListener listener) {
         this.listener = listener;
-        listView.setRefreshListener(listener);
+        listView.setRefreshListener((com.example.demo.view.OnRefreshListener) listener);
     }
 
     private LoadingListView listView = new LoadingListView(getContext());
@@ -35,7 +36,7 @@ public class SwipeToRefreshListView extends SwipeRefreshLayout implements SwipeR
         listView.onSwipeToRefresh();
     }
 
-    /**
+    /*®
      * 获取listview
      */
     public LoadingListView getRefrshbleView() {

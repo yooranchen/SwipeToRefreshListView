@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,6 +6,12 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
+import com.example.demo.view.SwipeToRefreshListView;
+
+/**
+ * 下拉刷新内部ListView
+ * Created by ${yooranchen} on 2015/1/6.
+ */
 public class LoadingListView extends ListView implements OnScrollListener {
 
     private SwipeToRefreshListView mParent;

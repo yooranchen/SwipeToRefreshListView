@@ -10,6 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.demo.view.LoadingListView;
+import com.example.demo.view.OnRefreshListener;
+import com.example.demo.view.SwipeToRefreshListView;
+
 public class MainActivity extends Activity implements OnRefreshListener {
 
     private Handler handler = new Handler() {
@@ -67,11 +71,22 @@ public class MainActivity extends Activity implements OnRefreshListener {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View layout = getLayoutInflater().inflate(
-                    android.R.layout.simple_list_item_1, parent, false);
-            TextView text = (TextView) layout.findViewById(android.R.id.text1);
-            text.setText(position + 1 + "行");
-            return layout;
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = getLayoutInflater().inflate(
+                        android.R.layout.simple_list_item_1, parent, false);
+                holder.text = (TextView) convertView.findViewById(android.R.id.text1);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            holder.text.setText(position + 1 + "行");
+            return convertView;
+        }
+
+        class ViewHolder {
+            TextView text;
         }
     }
 }

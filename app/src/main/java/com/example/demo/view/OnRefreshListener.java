@@ -1,8 +1,8 @@
-package com.example.demo;
+package com.example.demo.view;
 
 /**
  * 上啦和下啦刷新
- * Created by ${CaiShi} on 2015/1/6.
+ * Created by ${yooranchen} on 2015/1/6.
  */
 public interface OnRefreshListener {
 
