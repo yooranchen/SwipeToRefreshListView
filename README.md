@@ -20,5 +20,6 @@
 *	废弃getRefrshbleView();方法,
 *	直接通过SwipeToRefreshListView设置adapter();
 *	添加setEmptyView()方法;    
+
 ###	TODO
 *	添加HeaderView,FootView方法
