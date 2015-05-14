@@ -22,20 +22,19 @@ public class MainActivity extends Activity implements OnRefreshListener {
             array = new int[count];
             mAdapter.notifyDataSetChanged();
             Log.e("", "array>>" + array.length);
-            mRefreshbleView.onLoadingCompleted();
+            mSwipeToRefreshListView.onLoadingCompleted();
         }
     };
-    private LoadingListView mRefreshbleView;
+    private SwipeToRefreshListView mSwipeToRefreshListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SwipeToRefreshListView sl = (SwipeToRefreshListView) findViewById(R.id.swipeListView);
-        sl.setOnRefreshListener(this);
-        mRefreshbleView = sl.getRefrshbleView();
+        mSwipeToRefreshListView = (SwipeToRefreshListView) findViewById(R.id.swipeListView);
+        mSwipeToRefreshListView.setOnRefreshListener(this);
         mAdapter = new MyAdapter();
-        mRefreshbleView.setAdapter(mAdapter);
+        mSwipeToRefreshListView.setAdapter(mAdapter);
     }
 
     int count = 20;

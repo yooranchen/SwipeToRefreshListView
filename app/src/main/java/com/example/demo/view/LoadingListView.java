@@ -15,6 +15,7 @@ import com.example.demo.view.SwipeToRefreshListView;
 public class LoadingListView extends ListView implements OnScrollListener {
 
     private SwipeToRefreshListView mParent;
+    //上下拉刷新加载监听
     private OnRefreshListener listener;
 
     public LoadingListView(Context context) {
@@ -54,7 +55,9 @@ public class LoadingListView extends ListView implements OnScrollListener {
 
     private void setRefreshing() {
         mParent.setRefreshing(true);
-        listener.onLastItemVisible();
+        if (listener != null) {
+            listener.onLastItemVisible();
+        }
         isRefresh = true;//设置在刷新
         mLastItemVisible = true;
         isLoadingComplete = false;
@@ -77,6 +80,7 @@ public class LoadingListView extends ListView implements OnScrollListener {
         if (!isRefresh && null != listener) {
             mLastItemVisible = (totalItemCount > 0)
                     && (firstVisibleItem + visibleItemCount >= totalItemCount - 1);
+
         }
     }
 
@@ -92,4 +96,5 @@ public class LoadingListView extends ListView implements OnScrollListener {
     public void setRefreshListener(OnRefreshListener listener) {
         this.listener = listener;
     }
+
 }
