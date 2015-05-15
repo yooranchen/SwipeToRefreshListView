@@ -80,7 +80,6 @@ public class LoadingListView extends ListView implements OnScrollListener {
         if (!isRefresh && null != listener) {
             mLastItemVisible = (totalItemCount > 0)
                     && (firstVisibleItem + visibleItemCount >= totalItemCount - 1);
-
         }
     }
 

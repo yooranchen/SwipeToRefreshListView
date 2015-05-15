@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
 /**
@@ -14,10 +15,10 @@ public class SwipeToRefreshListView extends SwipeRefreshLayout
         implements SwipeRefreshLayout.OnRefreshListener {
 
     public void setOnRefreshListener(com.example.demo.view.OnRefreshListener listener) {
-        mListView.setRefreshListener(listener);
+        mInnerListView.setRefreshListener(listener);
     }
 
-    private LoadingListView mListView = new LoadingListView(getContext());
+    private LoadingListView mInnerListView;
 
     public SwipeToRefreshListView(Context context) {
         this(context, null);
@@ -25,8 +26,8 @@ public class SwipeToRefreshListView extends SwipeRefreshLayout
 
     public SwipeToRefreshListView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mListView.setParentView(this);
-        addView(mListView);
+        mInnerListView = new LoadingListView(getContext());
+        addView(mInnerListView);
         setOnRefreshListener(this);
     }
 
@@ -35,21 +36,21 @@ public class SwipeToRefreshListView extends SwipeRefreshLayout
      */
     @Override
     public void onRefresh() {
-        mListView.onSwipeToRefresh();
+        mInnerListView.onSwipeToRefresh();
     }
 
     /**
      * 设置适配器
      */
     public void setAdapter(BaseAdapter adapter) {
-        mListView.setAdapter(adapter);
+        mInnerListView.setAdapter(adapter);
     }
 
     /**
      * 加载完成
      */
     public void onLoadingCompleted() {
-        mListView.onLoadingCompleted();
+        mInnerListView.onLoadingCompleted();
     }
 
     /**
@@ -58,6 +59,44 @@ public class SwipeToRefreshListView extends SwipeRefreshLayout
      * @param emptyView
      */
     public void setEmptyView(View emptyView) {
-        mListView.setEmptyView(emptyView);
+        mInnerListView.setEmptyView(emptyView);
+    }
+
+    /**
+     * 添加HeadView
+     *
+     * @param headView
+     */
+    public void addHeaderView(View headView) {
+        mInnerListView.addHeaderView(headView);
+    }
+
+    /**
+     * 添加FootView
+     *
+     * @param footView
+     */
+    public void addFootView(View footView) {
+        mInnerListView.addFooterView(footView);
+    }
+
+    /**
+     * 行布局点击监听
+     *
+     * @param onItemCLickListener
+     */
+    public void setOnItemCLickListener(
+            AdapterView.OnItemClickListener onItemCLickListener) {
+        mInnerListView.setOnItemClickListener(onItemCLickListener);
+    }
+
+    /**
+     * 长按点击
+     *
+     * @param onItemLongClickListener
+     */
+    public void setOnItemLongClickListener(
+            AdapterView.OnItemLongClickListener onItemLongClickListener) {
+        mInnerListView.setOnItemLongClickListener(onItemLongClickListener);
     }
 }
