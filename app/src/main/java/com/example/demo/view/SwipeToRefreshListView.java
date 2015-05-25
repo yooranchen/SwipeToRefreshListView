@@ -27,6 +27,7 @@ public class SwipeToRefreshListView extends SwipeRefreshLayout
     public SwipeToRefreshListView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mInnerListView = new LoadingListView(getContext());
+        mInnerListView.setParentView(this);
         addView(mInnerListView);
         setOnRefreshListener(this);
     }
@@ -36,7 +37,8 @@ public class SwipeToRefreshListView extends SwipeRefreshLayout
      */
     @Override
     public void onRefresh() {
-        mInnerListView.onSwipeToRefresh();
+        setHasMoreData(true);
+        mInnerListView.onRefresh();
     }
 
     /**
@@ -47,9 +49,10 @@ public class SwipeToRefreshListView extends SwipeRefreshLayout
     }
 
     /**
-     * 加载完成
+     * 通知已完成加载
      */
     public void onLoadingCompleted() {
+        setRefreshing(false);
         mInnerListView.onLoadingCompleted();
     }
 
@@ -98,5 +101,14 @@ public class SwipeToRefreshListView extends SwipeRefreshLayout
     public void setOnItemLongClickListener(
             AdapterView.OnItemLongClickListener onItemLongClickListener) {
         mInnerListView.setOnItemLongClickListener(onItemLongClickListener);
+    }
+
+    /**
+     * 是否还有更多数据
+     *
+     * @param hasMoreData
+     */
+    public void setHasMoreData(boolean hasMoreData) {
+        mInnerListView.setHasMoreData(hasMoreData);
     }
 }

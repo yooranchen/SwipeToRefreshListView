@@ -4,5 +4,6 @@
     <string name="app_name">Demo</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="loading">加载中...</string>
+    <string name="load_to_end">无更多内容</string>
 </resources>

@@ -43,12 +43,19 @@ public class MainActivity extends Activity implements OnRefreshListener {
 
     @Override
     public void onRefresh() {
+        count = 0;
+        mSwipeToRefreshListView.setHasMoreData(true);
         Toast.makeText(this, "下拉", Toast.LENGTH_SHORT).show();
         handler.sendEmptyMessageDelayed(1, 2000);
     }
 
     @Override
-    public void onLastItemVisible() {
+    public void onLoadMoreData() {
+        if (count == 100) {
+            mSwipeToRefreshListView.onLoadingCompleted();
+            mSwipeToRefreshListView.setHasMoreData(false);
+            return;
+        }
         Toast.makeText(this, "上啦", Toast.LENGTH_SHORT).show();
         handler.sendEmptyMessageDelayed(1, 2000);
     }

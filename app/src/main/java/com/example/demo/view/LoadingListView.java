@@ -6,8 +6,6 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
-import com.example.demo.view.SwipeToRefreshListView;
-
 /**
  * 下拉刷新内部ListView
  * Created by ${yooranchen} on 2015/1/6.
@@ -18,6 +16,15 @@ public class LoadingListView extends ListView implements OnScrollListener {
     //上下拉刷新加载监听
     private OnRefreshListener listener;
 
+    /**
+     * 是否还有更多数据
+     */
+    private boolean hasMoreData = true;
+    /**
+     * 底部自动加载布局
+     */
+    private LoadingFootView mFootView;
+
     public LoadingListView(Context context) {
         this(context, null);
     }
@@ -26,6 +33,8 @@ public class LoadingListView extends ListView implements OnScrollListener {
         super(context, attrs);
         /* 添加滑动监听 */
         this.setOnScrollListener(this);
+        mFootView = new LoadingFootView(context);
+        addFooterView(mFootView);
     }
 
     /**
@@ -45,7 +54,6 @@ public class LoadingListView extends ListView implements OnScrollListener {
         mLastItemVisible = false;
         isLoadingComplete = true;
         isRefresh = false;//设置在刷新
-        mParent.setRefreshing(false);
     }
 
     /**
@@ -53,10 +61,12 @@ public class LoadingListView extends ListView implements OnScrollListener {
      */
     private boolean mLastItemVisible;
 
-    private void setRefreshing() {
-        mParent.setRefreshing(true);
+    /**
+     * 自动加载更多
+     */
+    private void loadMoreData() {
         if (listener != null) {
-            listener.onLastItemVisible();
+            listener.onLoadMoreData();
         }
         isRefresh = true;//设置在刷新
         mLastItemVisible = true;
@@ -67,9 +77,9 @@ public class LoadingListView extends ListView implements OnScrollListener {
     public void onScrollStateChanged(AbsListView view, int state) {
         if (!isRefresh && state == OnScrollListener.SCROLL_STATE_IDLE
                 && null != listener && mLastItemVisible) {
-            if (isLoadingComplete) {
+            if (isLoadingComplete && hasMoreData) {
                 isLoadingComplete = false;
-                setRefreshing();
+                loadMoreData();
             }
         }
     }
@@ -77,13 +87,13 @@ public class LoadingListView extends ListView implements OnScrollListener {
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
-        if (!isRefresh && null != listener) {
+        if (!isRefresh && null != listener && hasMoreData) {
             mLastItemVisible = (totalItemCount > 0)
                     && (firstVisibleItem + visibleItemCount >= totalItemCount - 1);
         }
     }
 
-    public void onSwipeToRefresh() {
+    public void onRefresh() {
         isRefresh = true;
         listener.onRefresh();
     }
@@ -96,4 +106,13 @@ public class LoadingListView extends ListView implements OnScrollListener {
         this.listener = listener;
     }
 
+    /**
+     * 设置是否是最后一行
+     *
+     * @param hasMoreData
+     */
+    public void setHasMoreData(boolean hasMoreData) {
+        this.hasMoreData = hasMoreData;
+        mFootView.setHasMoreData(hasMoreData);
+    }
 }

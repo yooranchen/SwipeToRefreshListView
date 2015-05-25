@@ -12,7 +12,7 @@ public interface OnRefreshListener {
     void onRefresh();
 
     /**
-     * 上啦加载更多
+     * 上拉加载更多数据
      */
-    void onLastItemVisible();
+    void onLoadMoreData();
 }
